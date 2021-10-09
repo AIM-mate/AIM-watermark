@@ -5,7 +5,7 @@ import PyPDF2
 import os
 
 #variabili
-id = '1n7cyj2H-pQT-TyTWSkbot7aAbLccCW3Y'
+id = '1xFyYjyAvFQOp_fABLPiFxl4nQSOwErB2'
 
 #funzioni:
 
@@ -16,6 +16,7 @@ def brandall(id):
         if file['mimeType'] == 'application/vnd.google-apps.folder':
             brandall(file['id'])
         elif file['title'].rsplit('.')[-1]=='pdf':
+            print('branding file:'+file['title'])
             brand(file['id'])
 
 #adding the watermark to each page
@@ -60,7 +61,7 @@ def brand(id):
     file.SetContentFile(file['title'])
     file.Upload()
 
-    #deliting from the local directories
+    #deleting from the local directories
     file = open(file['title'],'r')
     file.close()
     os.remove(file.name)
@@ -179,7 +180,7 @@ def sort(fltitle):
             if file['title'] == 'Varie':
                 return file['id']
             
-#pulisco la parola da segnin vari di separazione
+#pulisco la parola da segni vari di separazione
 def clean(title):
     out=''
     signs = ['-', '_', ' ', '.','/']
@@ -209,7 +210,7 @@ drive = GoogleDrive(gauth)
 
 
 brandall(id)
-moveall(id)
+#moveall(id)
 
 
 
