@@ -2,3 +2,4 @@ venv/
 *.json
 *.pdf
 !aim_watermark.pdf
+__pycache__/
