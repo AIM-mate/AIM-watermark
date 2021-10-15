@@ -3,3 +3,4 @@ venv/
 *.pdf
 !aim_watermark.pdf
 __pycache__/
+*.zip
