@@ -42,7 +42,6 @@ def transfer_bookmarks(pdf_out, outlines, page_map=None, parent=None):
     #non veniva adoperato dal codice originale, dunque l'ho cancellato.
 
     for outline in outlines:
-        print(outline)
         if isinstance(outline, Destination):
             outdict = {
                 'title': outline['/Title'],
@@ -66,53 +65,43 @@ def transfer_bookmarks(pdf_out, outlines, page_map=None, parent=None):
 
 #endregion
 
-def watermark(name):
+def watermark(name, overwrite, dir=None):
 
-    temp = 'watermarked.pdf'
+    temp = 'temp.pdf' if overwrite else dir+'/Watermarked/'+name.split('/')[-1]
 
     with open(name, 'rb') as f_in, \
         open('aim_watermark.pdf', 'rb') as wtr, \
         open(temp, 'wb') as f_out:
         
-        print('Apro il file')
         pdf_in = Reader(f_in)
         pdf_wtr = Reader(wtr).getPage(0)
         pdf_out = Writer()
 
         num_pages = pdf_in.getNumPages()
         for i in range(num_pages):
-            percent = int(100*round( (i+1)/num_pages, 2) )
-            printProgressBar(percent, 'Filigrana')
             page = pdf_in.getPage(i)
             page.mergePage(pdf_wtr)
             pdf_out.addPage(page)
-
-        print('\n Copio i segnalibri')
         
         page_map = get_page_map(pdf_in)
         outlines = pdf_in.getOutlines()
-
         pdf_out = transfer_bookmarks(pdf_out, outlines, page_map)
 
         pdf_out.write(f_out)
 
-    os.replace(temp,name)
-    print('Finito')
+    if overwrite:
+        os.replace(temp,name)
 
-def waterall():
+def waterall(pdfs,overwrite,dir=None):
 
-    pdfs = [file for file in glob.iglob('**/**', recursive=True) \
-        if file.split('.')[-1] == 'pdf' \
-            and file != 'aim_watermark.pdf' \
-                and 'Watermarkati' not in file
-        ]
+    if dir and not os.path.isdir(dir+'/Watermarked'):
+        os.mkdir(dir+'/Watermarked')
 
     for pdf in pdfs:
-        print('Aggiungo filigrana a '+pdf)
         try:
-            watermark(pdf)
+            watermark(pdf,dir,overwrite)
         except:
-            print('Fallito')
+            pass
 
 
 def printProgressBar(value, label):
