@@ -1,7 +1,7 @@
 from PyPDF2 import PdfFileReader as Reader
 from PyPDF2 import PdfFileWriter as Writer
 from PyPDF2.generic import Destination
-import os, sys, glob
+import os, sys
 
 
 #----- Stack overflow -----
