@@ -65,9 +65,9 @@ def transfer_bookmarks(pdf_out, outlines, page_map=None, parent=None):
 
 #endregion
 
-def watermark(name, overwrite, dir=None):
+def watermark(name, overwrite, dir=''):
 
-    temp = 'temp.pdf' if overwrite else dir+'/Watermarked/'+name.split('/')[-1]
+    temp = 'temp.pdf' if overwrite else dir+'/'*bool(dir)+'Watermarked/'+name.split('/')[-1]
 
     with open(name, 'rb') as f_in, \
         open('aim_watermark.pdf', 'rb') as wtr, \
