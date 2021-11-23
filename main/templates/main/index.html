@@ -1,5 +1,12 @@
+<!-- Estendo il template base -->
 {% extends "main/base.html" %}
-
+<!-- Contenuto -->
 {% block content %}
-    <h1>Contenuto</h1>
+    <h1>Trascina qui i file!</h1>
+    {% csrf_token %}
+    <form action="upload" method ="POST" class="dropzone dz">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    </form>
 {% endblock %}
