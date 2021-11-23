@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <!-- Vedi la pagina di Bootstrap -->
 <html lang="it">
@@ -13,7 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Style-->
+    <!-- Dropzone-->
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
 </head>
 <!--Corpo-->
 <body>
@@ -21,7 +26,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- Brand -->
         <a class="navbar-brand">
-            {% load static %}
             <img src="{% static 'main/favicon.ico' %}" width="30%" height="30%" class="d-inline-block align-top" alt="">
         </a>
         <!-- Tasto per espandere la navbar -->
