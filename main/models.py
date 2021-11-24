@@ -4,7 +4,6 @@ from django.db import models
 
 class Doc(models.Model):
 
-    time= models.DateTimeField(auto_now=True)
     file = models.FileField(upload_to='documents/')
 
     def __str__(self):
