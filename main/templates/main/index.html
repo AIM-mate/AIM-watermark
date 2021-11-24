@@ -3,8 +3,8 @@
 <!-- Contenuto -->
 {% block content %}
     <h1>Trascina qui i file!</h1>
-    {% csrf_token %}
-    <form action="upload" method ="POST" class="dropzone dz">
+    <form action="upload/" method ="POST" class="dropzone dz">
+        {% csrf_token %}
         <div class="fallback">
             <input name="file" type="file" multiple />
         </div>
