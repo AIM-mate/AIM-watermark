@@ -15,7 +15,9 @@
   
         var myDropzone = new Dropzone(".dropzone", { 
            maxFiles: 10,
-           acceptedFiles: ".pdf"
+           acceptedFiles: ".pdf",
+           addRemoveLinks: true,
+           dictDefaultMessage: 'Carica qui i tuoi file.'
         });
     </script>
 {% endblock %}
