@@ -3,10 +3,19 @@
 <!-- Contenuto -->
 {% block content %}
     <h1>Trascina qui i file!</h1>
-    <form action="upload/" method ="POST" class="dropzone dz">
+    <form action="upload/" method ="POST" class="dropzone dz" id="myDropzone">
         {% csrf_token %}
         <div class="fallback">
             <input name="file" type="file" multiple />
         </div>
     </form>
+    <!-- Javascript custom -->
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+  
+        var myDropzone = new Dropzone(".dropzone", { 
+           maxFiles: 10,
+           acceptedFiles: ".pdf"
+        });
+    </script>
 {% endblock %}
