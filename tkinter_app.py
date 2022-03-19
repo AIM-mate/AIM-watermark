@@ -2,7 +2,20 @@ from tkinter import *
 from tkinter import filedialog
 from watermark import watermark
 from tkinter.ttk import Progressbar
-import os
+import os, sys
+#97666984
+
+img_path = "Logo_aim_drive.ico"
+if hasattr(sys, '_MEIPASS'):
+    # PyInstaller >= 1.6
+    img_path = os.path.join(sys._MEIPASS, img_path)
+elif '_MEIPASS2' in os.environ:
+    # PyInstaller < 1.6 (tested on 1.5 only)
+    img_path = os.path.join(os.environ['_MEIPASS2'], img_path)
+else:
+    img_path = os.path.join(os.dirname(sys.argv[0]), img_path)
+
+
 
 sentinel = object()
 
@@ -28,7 +41,7 @@ class App(Tk):
         self.title('Watermark AIM')
 
         #---icon---
-        self.iconbitmap(r'Logo_aim-drive.ico')
+        self.iconbitmap(img_path)
 
         #---geometry---
         self.width = int(self.winfo_screenwidth()/2)
