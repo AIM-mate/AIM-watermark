@@ -1,8 +1,18 @@
 from PyPDF2 import PdfFileReader as PyPDFReader
 from PyPDF2 import PdfFileWriter as PyPDFWriter
 from PyPDF2.generic import Destination
-import os, pdfrw
+import os, sys, pdfrw
 
+#comapitibilità con tkinter
+watermark_path = "aim_watermark.pdf"
+if hasattr(sys, '_MEIPASS'):
+    # PyInstaller >= 1.6
+    watermark_path = os.path.join(sys._MEIPASS, watermark_path)
+elif '_MEIPASS2' in os.environ:
+    # PyInstaller < 1.6 (tested on 1.5 only)
+    watermark_path = os.path.join(os.environ['_MEIPASS2'], watermark_path)
+else:
+    watermark_path = os.path.join(os.dirname(sys.argv[0]), watermark_path)
 
 #----- Stack overflow -----
 #Presa da questa risposta: https://stackoverflow.com/a/68853751/13373369
@@ -97,7 +107,7 @@ def watermark(name:str, overwrite:bool, dir:str=''):
 
     #apro i file
     with open(name, 'rb') as f_in, \
-        open('aim_watermark.pdf', 'rb') as wtr, \
+        open(watermark_path, 'rb') as wtr, \
         open(temp, 'wb') as f_out:
         
         #apro con pdfrw
