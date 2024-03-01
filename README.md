@@ -1,7 +1,4 @@
 # AIM Watermarker
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
 **AIM Watermarker** è uno script Python che aggiunge il watermark di AIM ai PDF presenti in una cartella destinati al Portale Appunti.
 
