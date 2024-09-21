@@ -7,6 +7,8 @@ from PyPDF2.generic import Destination
 
 from src import constants
 
+import warnings
+
 # ----- Stack overflow -----
 # Presa da questa risposta: https://stackoverflow.com/a/68853751/13373369
 # region
@@ -148,6 +150,32 @@ class Watermarker:
         # copio il file temporaneo nella cartella di output
         os.replace(temp, self.outputpath + "/" + os.path.basename(file))
 
+    def is_format_A4(self, file_path) -> bool:
+            # This function check wether the file is indeed in A4 format. 
+            # We have noticed that the watermark is not placed correctly if 
+            # the format is different from A4.
+
+            # A4 Format is width = 595.0 and height = 842.0
+            # These constants are defined in the constants.py file
+            # We check if the width and height of the page are
+            # within a chosen tolerance. 
+            tol = 1
+
+            with open(file_path, "rb") as file: 
+                reader = PdfReader(file)
+                page_num = len(reader.pages)
+                for idx in range(page_num):
+                    page = reader.pages[idx]
+
+                    width = page.mediabox.width
+                    height = page.mediabox.height
+
+                    if abs(width - constants.a4_width) < tol and abs(height - constants.a4_height) < tol:
+                        return True
+                    
+            return False
+
+
     def run(self):
         if not self.overwrite:
             if os.path.isdir(self.path + "/Watermarked"):
@@ -170,6 +198,11 @@ class Watermarker:
 
         # run the watermark function on each pdf
         for file in pdfs_files:
+            
+            # Check if the file is in A4 format
+            if not self.is_format_A4(file):
+                warnings.warn(f"Il file {file} non è in formato A4. Il watermark potrebbe non essere posizionato correttamente.\n", stacklevel=2)
+
             self.watermark(file)
             try:
                 self.watermark(file)
