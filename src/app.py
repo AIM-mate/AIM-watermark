@@ -170,10 +170,10 @@ class Watermarker:
                     width = page.mediabox.width
                     height = page.mediabox.height
 
-                    if abs(width - constants.a4_width) < tol and abs(height - constants.a4_height) < tol:
-                        return True
+                    if not (abs(width - constants.a4_width) < tol and abs(height - constants.a4_height) < tol):
+                        return False
                     
-            return False
+            return True
 
 
     def run(self):
