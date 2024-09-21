@@ -1,0 +1,24 @@
+[project]
+name = "AIM-watermark"
+version = "0.1.0"
+description = "Tool to apply watermark to PDF files."
+authors = [
+    {name = "teobucci", email = "teobucci8@gmail.com"},
+]
+dependencies = [
+    "PyPDF2>=3.0.1",
+]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
+
+[tool.ruff]
+line-length = 120
