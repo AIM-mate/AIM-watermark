@@ -232,3 +232,5 @@ pyrightconfig.json
 
 .python-version
 .vscode/settings.json
+.pdm-python
+tests/**/*.pdf
