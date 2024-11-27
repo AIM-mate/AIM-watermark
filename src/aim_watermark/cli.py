@@ -3,8 +3,8 @@ import logging
 import sys
 from pathlib import Path
 
-from core import apply_watermark
-from settings import Settings
+from aim_watermark.core import apply_watermark
+from aim_watermark.settings import Settings
 
 logger = logging.getLogger("")
 logger.setLevel(logging.INFO)
