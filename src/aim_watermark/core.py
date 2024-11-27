@@ -2,7 +2,7 @@ import copy
 import tempfile
 from importlib import resources
 
-import PyPDF2
+import pypdf
 
 from aim_watermark import images
 from aim_watermark.settings import Settings
@@ -17,7 +17,7 @@ def get_page_map(
     # Questa funzione costruisce un dizionario che mette in
     # corrispondenza ricorsivamente il numero della pagina e il suo
     # id (Perchè si debba fare così per i pdf non lo so ma va fatto
-    # per potersi poi riferire alla pagina nelle funzioni di PyPDF2).
+    # per potersi poi riferire alla pagina nelle funzioni di pypdf).
 
     if result is None:
         result = {}
@@ -50,7 +50,7 @@ def transfer_bookmarks(
     # non veniva adoperato dal codice originale, dunque l'ho cancellato.
 
     for outline in outlines:
-        if isinstance(outline, PyPDF2.generic.Destination):
+        if isinstance(outline, pypdf.generic.Destination):
             outdict = {
                 "title": outline["/Title"],
                 "page": page_map[outline.page.idnum] + 1,
@@ -77,10 +77,10 @@ def copy_bookmarks(
     # Questa funzione copia le pagine dal doc modificato a quello nuovo
     # e poi trasferisce i bookmark dall'originale.
 
-    # apro i file con PyPDF2
-    bookmarks_source_pdf = PyPDF2.PdfReader(bookmarks_source_path)
-    source_file_pdf = PyPDF2.PdfReader(source_file_path)
-    destination_file_pdf = PyPDF2.PdfWriter()
+    # apro i file con pypdf
+    bookmarks_source_pdf = pypdf.PdfReader(bookmarks_source_path)
+    source_file_pdf = pypdf.PdfReader(source_file_path)
+    destination_file_pdf = pypdf.PdfWriter()
 
     # trasferisco le pagine dal modificato al nuovo
     for page_number in range(len(source_file_pdf.pages)):
@@ -103,10 +103,10 @@ def apply_watermark(
 ) -> None:
     # Read watermark
     watermark_path = resources.files(images) / "logo-aim.pdf"
-    watermark_page = PyPDF2.PdfReader(watermark_path).pages[0]
+    watermark_page = pypdf.PdfReader(watermark_path).pages[0]
 
-    reader = PyPDF2.PdfReader(source_file_path)
-    writer = PyPDF2.PdfWriter()
+    reader = pypdf.PdfReader(source_file_path)
+    writer = pypdf.PdfWriter()
 
     for page in reader.pages:
         # Get dimensions of the current page
@@ -154,8 +154,8 @@ def apply_watermark(
 
         # Resize and position the watermark
         transformed_watermark_page = copy.copy(watermark_page)
-        transformed_watermark_page.add_transformation(PyPDF2.Transformation().scale(logo_scaling))
-        transformed_watermark_page.add_transformation(PyPDF2.Transformation().translate(translate_x, translate_y))
+        transformed_watermark_page.add_transformation(pypdf.Transformation().scale(logo_scaling))
+        transformed_watermark_page.add_transformation(pypdf.Transformation().translate(translate_x, translate_y))
 
         # Merge the watermark with the current page
         merged_page = page

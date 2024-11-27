@@ -3,7 +3,7 @@ name = "AIM-watermark"
 version = "0.1.0"
 description = "Tool to apply watermark to PDF files."
 dependencies = [
-    "PyPDF2>=3.0.1",
+    "pypdf>=5.1.0",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
