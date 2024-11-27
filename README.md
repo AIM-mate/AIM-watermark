@@ -9,10 +9,10 @@ Python 3.10 o versioni successive.
 ## Installazione
 
 1. Clonare il repository
-2. Installare le dipendenze specificate in [`pyproject.toml`](pyproject.toml) usando [PDM](https://pdm-project.org/en/latest/):
+2. Installare il pacchetto con `pip`:
 
-```sh
-pdm install
+```bash
+pip install -e .
 ```
 
 ## Utilizzo
