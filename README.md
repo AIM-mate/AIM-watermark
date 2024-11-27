@@ -17,7 +17,7 @@ pip install -e .
 
 ## Utilizzo
 
-```
+```bash
 usage: cli.py [-h] [--path PATH] [--scale SCALE] [--position {topleft,topright,bottomleft,bottomright,center}] [--padding PADDING]
 
 options:
