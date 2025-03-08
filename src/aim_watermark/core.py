@@ -107,7 +107,7 @@ def apply_watermark(
 
     reader = pypdf.PdfReader(source_file_path)
     writer = pypdf.PdfWriter()
-    writer.append(reader, pages=list(range(len(reader.pages))))
+    writer.append(reader)
 
     for page in writer.pages:
         # Get dimensions of the current page
@@ -153,9 +153,9 @@ def apply_watermark(
                 (page_height - new_logo_height) // 2,
             )
 
-        # merge the page with the transformation
+        # Merge the page with the transformation
         page.merge_transformed_page(
-            watermark_page,
+            page2=watermark_page,
             ctm=[logo_scaling, 0, 0, logo_scaling, translate_x, translate_y],
             over=True,
         )
