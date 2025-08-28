@@ -1,12 +1,8 @@
-import copy
 import tempfile
-from importlib import resources
-
 import pypdf
+from os import path
 
-from aim_watermark import images
-from aim_watermark.settings import Settings
-
+from settings import Settings
 
 def get_page_map(
     bookmarkPDF,
@@ -102,7 +98,7 @@ def apply_watermark(
     settings: Settings,
 ) -> None:
     # Read watermark
-    watermark_path = resources.files(images) / "logo-aim.pdf"
+    watermark_path = f"{path.dirname(path.realpath(__file__))}/images/logo-aim.pdf"
     watermark_page = pypdf.PdfReader(watermark_path).pages[0]
 
     reader = pypdf.PdfReader(source_file_path)

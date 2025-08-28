@@ -1,20 +1,8 @@
 import argparse
-import logging
-import sys
 from pathlib import Path
 
-from aim_watermark.core import apply_watermark
-from aim_watermark.settings import Settings
-
-logger = logging.getLogger("")
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-stream_handler = logging.StreamHandler(sys.stdout)
-stream_handler.setFormatter(formatter)
-filehandler = logging.FileHandler("aim_watermarker.log", "a", "utf-8")
-filehandler.setFormatter(formatter)
-logger.addHandler(stream_handler)
-logger.addHandler(filehandler)
+from core import apply_watermark
+from settings import Settings
 
 
 def parse_args():
@@ -48,6 +36,13 @@ def parse_args():
         default=1,
     )
 
+    parser.add_argument(
+        "--out",
+        type=str,
+        help="Indirizzo della cartella di output",
+        default=None
+    )
+
     return parser.parse_args()
 
 
@@ -68,12 +63,12 @@ if __name__ == "__main__":
     if not input_path.is_dir():
         raise NotADirectoryError(f"{input_path} non è una cartella")
 
-    output_path = input_path.parent / f"{input_path.name}_watermarked"
+    output_path = Path(args.out) if args.out is not None else f"{input_path.parent}/{input_path.name}_watermarked"
+    
     output_path.mkdir(exist_ok=True)
 
     pdf_files = sorted(list(input_path.glob("*.pdf")))
 
     for pdf_file in pdf_files:
-        logging.info(f"Applying watermark to: {pdf_file.name}")
-        destination_file = str(output_path / pdf_file.name)
+        destination_file = f"{output_path}/{pdf_file.name}"
         apply_watermark(pdf_file, destination_file, settings)

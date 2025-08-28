@@ -4,16 +4,11 @@
 
 ## Requisiti
 
-Python 3.10 o versioni successive.
+Python 3.6 o versioni successive.
 
 ## Installazione
 
-1. Clonare il repository
-2. Installare il pacchetto con `pip`:
-
-```bash
-pip install -e .
-```
+1. Clonare il repository come submodule
 
 ## Utilizzo
 
