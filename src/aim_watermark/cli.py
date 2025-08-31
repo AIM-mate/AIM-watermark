@@ -43,6 +43,13 @@ def parse_args():
         default=None
     )
 
+    parser.add_argument(
+        "--file",
+        type=str,
+        help="Indirizzo de file di input",
+        default=None
+    )
+
     return parser.parse_args()
 
 
@@ -55,19 +62,27 @@ if __name__ == "__main__":
         padding=args.padding,
     )
 
-    input_path = Path(args.path)
+    pdf_files = []
+    if args.file is None:
+        input_path = Path(args.path)
 
-    if not input_path.exists():
-        raise FileNotFoundError(f"{input_path} non esiste")
+        if not input_path.exists():
+            raise FileNotFoundError(f"{input_path} non esiste")
 
-    if not input_path.is_dir():
-        raise NotADirectoryError(f"{input_path} non è una cartella")
+        if not input_path.is_dir():
+            raise NotADirectoryError(f"{input_path} non è una cartella")
 
-    output_path = Path(args.out) if args.out is not None else f"{input_path.parent}/{input_path.name}_watermarked"
-    
+        output_path = Path(args.out) if args.out is not None else f"{input_path.parent}/{input_path.name}_watermarked"
+        
+        pdf_files = sorted(list(input_path.glob("*.pdf")))
+    elif args.out is not None:
+        output_path = Path(args.out)
+        pdf_files = [Path(args.file)]
+    else:
+        raise ValueError("Opzioni non valide")
+
     output_path.mkdir(exist_ok=True)
 
-    pdf_files = sorted(list(input_path.glob("*.pdf")))
 
     for pdf_file in pdf_files:
         destination_file = f"{output_path}/{pdf_file.name}"
